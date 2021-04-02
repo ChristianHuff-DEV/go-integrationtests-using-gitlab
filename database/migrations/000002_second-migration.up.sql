@@ -1,0 +1,1 @@
+ALTER TABLE test ADD COLUMN user_name text;

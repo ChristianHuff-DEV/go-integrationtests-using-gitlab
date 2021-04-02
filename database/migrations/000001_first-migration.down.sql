@@ -1,0 +1,2 @@
+DELETE FROM test;
+DROP TABLE test;
