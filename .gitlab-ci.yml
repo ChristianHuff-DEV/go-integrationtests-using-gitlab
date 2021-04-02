@@ -1,0 +1,36 @@
+stages:
+  - test
+
+# Run the unit and integration test for the portofolio-service
+run-tests:
+  stage: test
+  image: golang
+  needs: []
+  # The tags a GitLab runner must have in order to run this job
+  tags:
+    - docker
+    - privileged
+  # Start the dependent service which allows us to use Docker inside a Docker GitLab runner
+  services:
+    - docker:dind
+  variables:
+    # Set the Docker host to be the one of the previously created service
+    DOCKER_HOST: tcp://docker:2375
+    # By GitLab recommended storate driver when using Docker-in-Docker (see https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-the-overlayfs-driver)
+    DOCKER_DRIVER: overlay2
+    # Disable the need for certificates when this build job communicates with the Docker service
+    DOCKER_TLS_CERTDIR: ""
+    # Override the value inside the "config.env" file so the test connects to the database running inside the
+    # Docker-in-Docker service
+    DATABASE_HOST: docker
+  script:
+    # Install the tool used to create a GitLab compatible report of the executed tests
+    - go get -u github.com/jstemmer/go-junit-report
+    # Create the folder in which the test report will be stored
+    - mkdir -p build/output
+    # Run the tests and save the report in the previously created folder
+    - go test ./... -v 2>&1 | go-junit-report > build/output/test-result.xml && go test ./...
+  artifacts:
+    reports:
+      # Set the path under which GitLab can find the test report
+      junit: $CI_PROJECT_DIR/build/output/**.xml
