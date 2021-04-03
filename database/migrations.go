@@ -10,7 +10,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
-// MigrateDatabase updates the database to the latest version if it isn't already up-tp-date
+// MigrateDatabase updates the database to the latest version if it isn't already up-to-date
 //
 // Uses github.com/golang-migrate/migrate.
 func MigrateDatabase(databaseName, pathToMigrations string, db *sql.DB) error {
