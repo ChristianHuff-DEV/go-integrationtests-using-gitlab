@@ -25,7 +25,7 @@ run-tests:
     # Disable the need for certificates when this build job communicates with the Docker service
     # If you want to secure the communication between the container of this build job and the Docker service you have to
     # slightly change the configuration of the GitLab runner. (see https://about.gitlab.com/blog/2019/07/31/docker-in-docker-with-docker-19-dot-03/)
-    # Since in my case everything is running on the same server I can live with this communication being unencrypted.
+    # Since in my case everything is running on the same server I can live with this communication not being encrypted.
     DOCKER_TLS_CERTDIR: ""
     # Override the value inside the "config.env" file so the test connects to the database running inside the
     # Docker-in-Docker service

@@ -33,7 +33,7 @@ func TestMain(m *testing.M) {
 		log.Fatalf("error starting postgres docker container: %s", err)
 	}
 
-	// The port mapping for the Docker container is randomly assigned. Here we ask there container on which port
+	// The port mapping for the Docker container is randomly assigned. Here we ask the container on which port
 	// the database will be available.
 	port := postgresContainer.GetPort("5432/tcp")
 
